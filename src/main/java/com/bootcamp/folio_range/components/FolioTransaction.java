@@ -35,4 +35,29 @@ public class FolioTransaction {
 		return "FolioTransaction [start=" + start + ", end=" + end + ", statusCode=" + statusCode + ", transactionCode="
 				+ transactionCode + "]";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FolioTransaction other = (FolioTransaction) obj;
+		if (end != other.end)
+			return false;
+		if (start != other.start)
+			return false;
+		if (statusCode == null) {
+			if (other.statusCode != null)
+				return false;
+		} else if (!statusCode.equals(other.statusCode))
+			return false;
+		if (transactionCode != other.transactionCode)
+			return false;
+		return true;
+	}
+	
+	
 }
