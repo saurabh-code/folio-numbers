@@ -26,7 +26,7 @@ public class FolioTransaction {
 		return statusCode;
 	}
 
-	public int getTransactionCode() {
+	public int getTransactionCode() {	
 		return transactionCode;
 	}
 
