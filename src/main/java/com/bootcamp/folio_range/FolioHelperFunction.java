@@ -22,20 +22,23 @@ public class FolioHelperFunction {
     }
     public static boolean checkForSplit(FolioTransaction first, FolioTransaction second){
         if(first.getStart() > second.getStart()) {
-            interChange(first, second);
+           // interChange(first, second);
+            if(splitCondition(second,first)){ return true; }
+            else return false;
         }
-        if(splitCondition(first,second)){
-                return true;
+        else {
+            if(splitCondition(first,second)){ return true; }
+            else return false;
         }
-        return false;
     }
 
     public static boolean checkForCombine(FolioTransaction first, FolioTransaction second){
         if(first.getStatusCode() == second.getStatusCode() && first.getTransactionCode()== second.getTransactionCode()) {
-            if(first.getStart() > second.getStart()) {
-                interChange(first, second);
+            if(first.getStart() < second.getStart()) {
+                return (first.getEnd() == (second.getStart())-1);
             }
-            return (first.getEnd() == (second.getStart())-1);
+            else
+                return (second.getEnd() == (first.getStart())-1);
         }
         return false;
     }
@@ -71,6 +74,13 @@ public class FolioHelperFunction {
     
     public static List<FolioTransaction> combine(FolioTransaction first, FolioTransaction second){
         List<FolioTransaction> list = new  ArrayList<>();
+        if(first.getStart() < second.getStart()) {
+            //interChange(first, second);
+            list.add(new FolioTransaction(first.getStart(),second.getEnd(),first.getStatusCode(),first.getTransactionCode()));
+        }
+        else {
+            list.add(new FolioTransaction(second.getStart(),first.getEnd(),first.getStatusCode(),first.getTransactionCode()));
+        }
         return list;
     }
     
